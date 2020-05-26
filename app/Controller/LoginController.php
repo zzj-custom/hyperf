@@ -76,6 +76,6 @@ class LoginController extends BaseController
             'to' => [$email => 'movie创建者'],
             'content' => str_replace('%code%', $code, config('mail_body', ''))
         ];
-        return $this->sendMail($mail);
+        $this->sendMail($mail);
     }
 }

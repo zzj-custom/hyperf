@@ -2,10 +2,10 @@
 
 return [
     'default' => [
-        'host' => 'localhost',
+        'host' => '8.129.176.243',
         'port' => 5672,
-        'user' => 'guest',
-        'password' => 'guest',
+        'user' => 'zqp',
+        'password' => 'Zqp113217',
         'vhost' => '/',
         'concurrent' => [
             'limit' => 1,

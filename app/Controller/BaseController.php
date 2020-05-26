@@ -63,7 +63,6 @@ class BaseController extends AbstractController
         $this->logger = $logger;
 
         $this->param = $this->request->all();
-        $this->logger->info(json_encode($this->request->all()) . 'param');
     }
 
     protected function checkLogin($uid)
