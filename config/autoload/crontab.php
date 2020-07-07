@@ -10,10 +10,10 @@ return [
 //            ->setRule('*/10 * * * *')
 //            ->setCallback([\App\Controller\CrontabController::class, 'handleArticleCurl'])
 //            ->setMemo('处理爬取数据'),
-        (new Crontab())->setName('handleImageCurl')
-            ->setRule('*/5 * * * *')
-            ->setCallback([\App\Controller\CrontabController::class, 'handleImageCurl'])
-            ->setMemo('处理爬取数据'),
+//        (new Crontab())->setName('handleImageCurl')
+//            ->setRule('*/5 * * * *')
+//            ->setCallback([\App\Controller\CrontabController::class, 'handleImageCurl'])
+//            ->setMemo('处理爬取数据'),
 //        (new Crontab())->setName('handleArticleBlogCurl')
 //            ->setRule('*/2 * * * *')
 //            ->setCallback([\App\Controller\CrontabController::class, 'handleArticleBlogCurl'])

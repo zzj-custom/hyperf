@@ -23,7 +23,7 @@ class CurlController extends AbstractController
 {
     private static $requestUrl = 'https://www.zhihu.com/api/v3/feed/topstory/hot-lists/total?limit=100&desktop=true';
 
-    private static $requestImgUrl = 'https://www.duitang.com/napi/blog/list/by_search/?kw=%E6%A0%A1%E8%8A%B1';
+    private static $requestImgUrl = 'https://www.duitang.com/napi/blog/list/by_search/?kw=%E5%86%99%E7%9C%9F'; //https://www.duitang.com/napi/blog/list/by_search/?kw=%E6%A0%A1%E8%8A%B1';
 
     public static $imgArray = [
         'jpg', 'jpeg', 'png', 'gif'
@@ -154,12 +154,22 @@ class CurlController extends AbstractController
                 if (!in_array(substr($value['photo']['path'], strrpos($value['photo']['path'], '.') + 1), self::$imgArray)) {
                     continue;
                 }
-                $img_url = $this->uploadFile($value['photo']['path'], 'image');
-//                if(!$img_url){
-//                    continue;
-//                }
+                $dataImage = file_get_contents($value['photo']['path']);
+                if(empty($dataImage)){
+                    continue;
+                }
+                $data = file_get_contents($value['photo']['path']);
+                if(empty($data)){
+                    continue;
+                }
+                $image = substr($value['photo']['path'], strrpos($value['photo']['path'], '/' ) + 1);
+                if(file_exists(BASE_PATH . '/public/image/' . $image)){
+                    continue;
+                }
+                $this->logger->info($image);
+                file_put_contents(BASE_PATH . '/public/image/' . $image, $data);
                 $insert_data[] = [
-                    'img_url' => $img_url,
+                    'img_url' => $image,
                     'width' => $value['photo']['width'],
                     'height' => $value['photo']['height'],
                     'img_id' => $value['id'],

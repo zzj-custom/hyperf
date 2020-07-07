@@ -32,8 +32,10 @@ class Image extends Model
         'delayed' => false,
     ];
 
-    public function index(){
+    protected $casts = ['id' => 'integer', 'img_url' => 'string', 'width' => 'integer', 'height' => 'integer'];
 
+    public static function getImage($page, $page_size){
+        return self::query()->skip(($page - 1) * $page_size)->limit($page_size)->get()->toArray();
     }
 }
 

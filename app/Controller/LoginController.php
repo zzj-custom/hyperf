@@ -12,13 +12,21 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Amqp\Producer\AppProducer;
 use App\Constants\ErrorCode;
 use App\Constants\FunctionCommon;
 use App\Exception\BusinessException;
 use App\Model\User;
+use Hyperf\Amqp\Producer;
+use Hyperf\Di\Annotation\Inject;
 
 class LoginController extends BaseController
 {
+    /**
+     * @Inject()
+     * @var Producer
+     */
+    protected  $producer;
 
     public function Login()
     {
@@ -70,12 +78,16 @@ class LoginController extends BaseController
 
     public function sendLoginMail($email, $code){
         //发送邮件
-        $mail = [
+        $emailData = [
             'subject' => 'movie邮箱验证',
             'from' => [env('MAIL_USER_NAME', '1844066417@qq.com') => 'movie创建者'],
             'to' => [$email => 'movie创建者'],
             'content' => str_replace('%code%', $code, config('mail_body', ''))
         ];
-        $this->sendMail($mail);
+        $producerMessage = [
+            'data' => $emailData,
+            'exchange' => 'email'
+        ];
+        $this->producer->produce(new AppProducer($producerMessage));
     }
 }
